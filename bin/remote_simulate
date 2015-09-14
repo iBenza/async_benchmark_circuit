@@ -1,0 +1,39 @@
+#!/bin/sh -e
+
+if [ $# -lt 2 ]; then
+  echo "$0 user@remote_host text_bench.v file1.v file2.v ..." 1>&2
+  exit 1
+fi
+
+argv=($@)
+host=${argv[0]}
+bench_file=${argv[1]}
+shift; shift
+
+if [ -z $SSH_AGENT_PID ]; then
+  eval `ssh-agent`
+  ssh-add
+fi
+
+TEMP_DIR=`ssh $host mktemp -d`
+trap "ssh $host rm -rf $TEMP_DIR" EXIT
+
+scp "$bench_file" ${host}:${TEMP_DIR}/
+for f in $@; do
+  scp "$f" ${host}:${TEMP_DIR}/
+  options="$options -v `basename $f`"
+done
+
+ssh ${host} bash << EOS
+export VCS_HOME=/cad/Synopsys/VCS/E-2011.03-SP1
+export VCS_CC=gcc
+export PATH=\${VCS_HOME}/bin:\${PATH}
+export PATH=/usr/local/bin:\${PATH}
+export SNPSLMD_LICENSE_FILE=1718@apato
+
+cd $TEMP_DIR
+vcs -full64 -sverilog `basename ${bench_file}` ${options}
+./simv
+EOS
+
+ssh $host rm -rf $TEMP_DIR

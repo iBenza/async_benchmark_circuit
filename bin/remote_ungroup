@@ -1,0 +1,47 @@
+#!/bin/sh -e
+
+if [ $# -lt 3 ]; then
+  echo "$0 user@remote_host source.v main_module_name" 1>&2
+  exit 1
+fi
+
+host=$1
+verilog_file=$2
+main_design=$3
+net_list_file=`basename $verilog_file .v`_net.v
+
+if [ -z $SSH_AGENT_PID ]; then
+  eval `ssh-agent`
+  ssh-add
+fi
+
+TEMP_DIR=`ssh $host mktemp -d`
+trap "ssh $host rm -rf $TEMP_DIR" EXIT
+
+scp $verilog_file ${host}:${TEMP_DIR}/
+
+ssh ${host} bash << EOS
+SYNOPSYS=/cad/Synopsys/Synthesis/F-2011.09-SP3
+export PATH=\${SYNOPSYS}/amd64/bin:\${SYNOPSYS}/amd64/syn/bin:\$PATH
+export LM_LICENSE_FILE=1718@apato
+
+dc_shell << EOS2
+read_file -format verilog {${TEMP_DIR}/${verilog_file}}
+current_design ${main_design}
+ungroup -all -flatten -force
+define_name_rules verilog -allowed "A-Za-z0-9_"
+change_names -rules verilog -hierarchy
+write -hierarchy -format verilog -output ${TEMP_DIR}/${net_list_file}
+EOS2
+EOS
+
+scp ${host}:${TEMP_DIR}/${net_list_file} .
+ssh $host rm -rf $TEMP_DIR
+
+cat ${net_list_file} \
+  | tr '\n' ' ' \
+  | sed -e 's/\s\+/ /g' \
+  | sed -e 's/;/;\n/g' \
+  | sed -e 's/\.\w*(\([^)]*\))/\1/g' \
+  | sed -e 's/\<tri\>/wire/g' >tmp
+mv tmp ${net_list_file}
