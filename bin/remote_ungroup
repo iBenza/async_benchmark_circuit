@@ -36,12 +36,10 @@ EOS2
 EOS
 
 scp ${host}:${TEMP_DIR}/${net_list_file} .
+ssh ${host} cat ${TEMP_DIR}/${net_list_file} \
+  | perl -pe 's/([^;])\n/$1/g' \
+  | perl -pe 's/\.p[^(]*\(([^\)]*)\)/$1/g' \
+  | perl -pe 's/(\S) +(\S)/$1 $2/g' \
+  | perl -pe 's/tri/wire/g' \
+  > ${net_list_file}
 ssh $host rm -rf $TEMP_DIR
-
-cat ${net_list_file} \
-  | tr '\n' ' ' \
-  | sed -e 's/\s\+/ /g' \
-  | sed -e 's/;/;\n/g' \
-  | sed -e 's/\.\w*(\([^)]*\))/\1/g' \
-  | sed -e 's/\<tri\>/wire/g' >tmp
-mv tmp ${net_list_file}
