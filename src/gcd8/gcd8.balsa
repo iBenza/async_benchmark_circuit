@@ -1,0 +1,21 @@
+import [balsa.types.basic]
+
+constant X = 8
+procedure gcd(input x: X bits;
+              input y: X bits;
+              output z: X bits) is
+  variable x1: X bits
+  variable x2: X bits
+begin
+  loop
+    x -> x1 || y -> x2;
+    loop while x1 /= x2 then
+      if x1 > x2 then
+          x1 := (x1 - x2 as X bits)
+      else
+          x2 := (x2 - x1 as X bits)
+      end
+    end;
+    z <- x1
+  end
+end
