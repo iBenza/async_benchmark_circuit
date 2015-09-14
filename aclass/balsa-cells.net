@@ -1,0 +1,320 @@
+;;; `balsa-cells.net'
+;;; Class Balsa helper cells
+;;; Created: Thu May 31 17:21:43 BST 2007
+
+(circuit "buf1"
+    (ports
+        ("z" output 1)
+        ("a" input 1)
+    )    
+    (nets
+        ("na_0n" 1)
+    )    
+    (instances
+        (instance "IV" ("z" ("na_0n" 0))) 
+        (instance "IV" (("na_0n" 0) "a"))
+    )    
+    (attributes (cell-type "helper"))
+)
+
+(circuit "sbuf"
+         (ports
+           ("dst" output 1)
+           ("src" input 1)
+           )
+         (nets
+           )
+         (instances
+           (instance "buf1" ("dst" "src"))
+           )
+         (attributes (cell-type "helper"))
+         )
+
+(circuit "buff"
+         (ports
+           ("dst" output 1)
+           ("src" input 1)
+           )
+         (nets
+           )
+         (instances
+           (instance "buf1" ("dst" "src"))
+           )
+         (attributes (feedthrough (1 0)) (cell-type "helper"))
+         )
+
+
+
+(circuit "balsa_unref"
+    (ports
+        ("trigger" input 1)
+        ("write" input 64)
+    )
+    (nets
+        ("oldWrite" 64 assignable)
+    )
+    (instances
+        (shdl (assign "oldWrite" 0))
+        (shdl-repeat (wait-until-rising "trigger") (call "BalsaRef" "write") (call "BalsaUnref" "oldWrite") (assign "oldWrite" "write") (wait-until-falling "trigger"))
+    )
+    (attributes (cell-type "helper"))
+)
+
+(circuit "balsa_fa"
+	(ports
+		("nStart" input 1)
+		("A" input 1)
+		("B" input 1)
+		("nCVi" input 1)
+		("Ci" input 1)
+		("nCVo" output 1)
+		("Co" output 1)
+		("sum" output 1)
+	)
+	(nets
+		("start" 1)
+		("ha" 1)
+		("cv" 1)
+	)
+	(instances
+		(instance "IV" ("start" "nStart"))
+		(instance "NR2" ("cv" "nStart" "nCVi"))
+		(instance "nmux2" ("nCVo" "start" "cv" "ha"))
+		(instance "mux2" ("Co" "A" "Ci" "ha"))
+		(instance "EO" ("ha" "A" "B"))
+		(instance "EO" ("sum" "ha" "Ci"))
+	)
+	(attributes
+		(cell-type "helper")
+	)
+)
+
+(circuit "ao21"
+    (ports
+        ("q" output 1)
+        ("i0" input 1)
+        ("i1" input 1)
+        ("i2" input 1)
+    )
+    (nets
+        ("int_0n" 1)
+    )
+    (instances
+        (instance "OR2" ("q" ("int_0n" 0) "i2"))
+        (instance "AN2" (("int_0n" 0) "i0" "i1"))
+    )
+    (attributes (cell-type "helper"))
+)
+
+(circuit "ao22"
+    (ports
+        ("q" output 1)
+        ("i0" input 1)
+        ("i1" input 1)
+        ("i2" input 1)
+        ("i3" input 1)
+    )
+    (nets
+        ("int_0n" 2)
+    )
+    (instances
+        (instance "OR2" ("q" ("int_0n" 0) ("int_0n" 1)))
+        (instance "AN2" (("int_0n" 1) "i2" "i3"))
+        (instance "AN2" (("int_0n" 0) "i0" "i1"))
+    )
+    (attributes (cell-type "helper"))
+)
+
+(circuit "aoi22"
+    (ports
+        ("q" output 1)
+        ("i0" input 1)
+        ("i1" input 1)
+        ("i2" input 1)
+        ("i3" input 1)
+    )
+    (nets
+        ("int_0n" 2)
+    )
+    (instances
+        (instance "NR2" ("q" ("int_0n" 0) ("int_0n" 1)))
+        (instance "AN2" (("int_0n" 1) "i2" "i3"))
+        (instance "AN2" (("int_0n" 0) "i0" "i1"))
+    )
+    (attributes (cell-type "helper"))
+)
+
+(circuit "ao222"
+    (ports
+        ("q" output 1)
+        ("i0" input 1)
+        ("i1" input 1)
+        ("i2" input 1)
+        ("i3" input 1)
+        ("i4" input 1)
+        ("i5" input 1)
+    )
+    (nets
+        ("internal_0n" 2)
+        ("int_0n" 3)
+    )
+    (instances
+        (instance "ND2" ("q" ("internal_0n" 0) ("internal_0n" 1)))
+        (instance "IV" (("internal_0n" 1) ("int_0n" 2)))
+        (instance "NR2" (("internal_0n" 0) ("int_0n" 0) ("int_0n" 1)))
+        (instance "AN2" (("int_0n" 2) "i4" "i5"))
+        (instance "AN2" (("int_0n" 1) "i2" "i3"))
+        (instance "AN2" (("int_0n" 0) "i0" "i1"))
+    )
+    (attributes (cell-type "helper"))
+)
+
+(circuit "aoi222"
+    (ports
+        ("q" output 1)
+        ("i0" input 1)
+        ("i1" input 1)
+        ("i2" input 1)
+        ("i3" input 1)
+        ("i4" input 1)
+        ("i5" input 1)
+    )
+    (nets
+        ("internal_0n" 2)
+        ("int_0n" 3)
+    )
+    (instances
+        (instance "AN2" ("q" ("internal_0n" 0) ("internal_0n" 1)))
+        (instance "IV" (("internal_0n" 1) ("int_0n" 2)))
+        (instance "NR2" (("internal_0n" 0) ("int_0n" 0) ("int_0n" 1)))
+        (instance "AN2" (("int_0n" 2) "i4" "i5"))
+        (instance "AN2" (("int_0n" 1) "i2" "i3"))
+        (instance "AN2" (("int_0n" 0) "i0" "i1"))
+    )
+    (attributes (cell-type "helper"))
+)
+
+(circuit "mux2"
+    (ports
+        ("out" output 1)
+        ("in0" input 1)
+        ("in1" input 1)
+        ("sel" input 1)
+    )
+    (nets
+        ("nsel_0n" 1)
+    )
+    (instances
+        (instance "ao22" ("out" "in0" ("nsel_0n" 0) "in1" "sel"))
+        (instance "IV" (("nsel_0n" 0) "sel"))
+    )
+    (attributes (cell-type "helper"))
+)
+
+(circuit "nmux2"
+    (ports
+        ("out" output 1)
+        ("in0" input 1)
+        ("in1" input 1)
+        ("sel" input 1)
+    )
+    (nets
+        ("nsel_0n" 1)
+    )
+    (instances
+        (instance "aoi22" ("out" "in0" ("nsel_0n" 0) "in1" "sel"))
+        (instance "IV" (("nsel_0n" 0) "sel"))
+    )
+    (attributes (cell-type "helper"))
+)
+
+(circuit "demux2"
+    (ports
+        ("i" input 1)
+        ("o0" output 1)
+        ("o1" output 1)
+        ("s" input 1)
+    )
+    (nets
+        ("ns_0n" 1)
+    )
+    (instances
+        (instance "AN2" ("o1" "i" "s"))
+        (instance "AN2" ("o0" "i" ("ns_0n" 0)))
+        (instance "IV" (("ns_0n" 0) "s"))
+    )
+    (attributes (cell-type "helper"))
+)
+
+(circuit "selem"
+    (ports
+        ("Ar" input 1)
+        ("Aa" output 1)
+        ("Br" output 1)
+        ("Ba" input 1)
+    )
+    (nets
+        ("s_0n" 1)
+    )
+    (instances
+        (instance "NC2P" (("s_0n" 0) "Ar" "Ba"))
+        (instance "NR2" ("Aa" "Ba" ("s_0n" 0)))
+        (instance "AN2" ("Br" "Ar" ("s_0n" 0)))
+    )
+    (attributes (cell-type "helper"))
+)
+
+(circuit "telem"
+    (ports
+        ("Ar" input 1)
+        ("Aa" output 1)
+        ("Br" output 1)
+        ("Ba" input 1)
+    )
+    (nets
+        ("s_0n" 1)
+    )
+    (instances
+        (instance "ACU0D1" ("Aa" "Ba" "Ar"))
+        (instance "IV" (("s_0n" 0) "Aa"))
+        (instance "AN2" ("Br" "Ar" ("s_0n" 0)))
+    )
+    (attributes (cell-type "helper"))
+)
+
+(circuit "telemr"
+	(ports
+		("Ar" input 1)
+		("Aa" output 1)
+		("Br" output 1)
+		("Ba" input 1)
+		("initialise" input 1)
+	)
+	(nets
+		("s" 1)
+	)
+	(instances
+		(instance "AN2" ("Br" "Ar" "s"))
+		(instance "IV" ("s" "Aa"))
+		(instance "C2R" ("Aa" "Ba" "Ar" "initialise"))
+	)
+	(attributes
+		(cell-type "helper")
+		(global-ports "initialise")
+	)
+)
+
+(circuit "nor2_reset"
+    (ports
+        ("q" output 1)
+        ("i0" input 1)
+        ("initialise" input 1)
+    )
+    (nets
+    )
+    (instances
+        (instance "NR2" ("q" "i0" "initialise"))
+    )
+    (attributes (global-ports "initialise") (cell-type "helper"))
+)
+

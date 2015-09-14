@@ -1,0 +1,55 @@
+;;;
+;;;	`gate-mappings'
+;;; Abstract->concrete gate mappings, for asynchronous class cells
+;;;
+;;;
+;;; 2013, Shin'ya Ueoka
+;;;
+
+;;; nor{n}: out,in1,in2...
+("inv" ("IV" 0 1) (1 "IV"))
+("buf" ("IBUF1" 0 1) (1 "IBUF1"))
+("or2" ("OR2" 0 1 2) (1 "OR2"))
+("or3" ("OR3" 0 1 2 3) (1 "OR3"))
+("or4" ("OR4" 0 1 2 3 4) (1 "OR4"))
+("and2" ("AN2" 0 1 2) (1 "AN2"))
+("and3" ("AN3" 0 1 2 3) (1 "AN3"))
+("and4" ("AN4" 0 1 2 3 4) (1 "AN4"))
+("nor2" ("NR2" 0 1 2) (1 "NR2"))
+("nor3" ("NR3" 0 1 2 3) (1 "NR3"))
+("nor4" ("NR4" 0 1 2 3 4) (1 "NR4"))
+("nand2" ("ND2" 0 1 2) (1 "ND2"))
+("nand3" ("ND3" 0 1 2 3) (1 "ND3"))
+("nand4" ("ND4" 0 1 2 3 4) (1 "ND4"))
+("xor2" ("EO" 0 1 2) (1 "EO"))
+("xor3" ("EO3" 0 1 2 3) (1 "EO3"))
+("xnor2" ("EN" 0 1 2) (1 "EN"))
+("xnor3" ("EN3" 0 1 2 3) (1 "EN3"))
+("latch" ("LD1" 1 0 2) (1 "LD1"))
+;;;("connect" ("IBUF1" 0 1) (1 "IBUF1"))
+("c-element2" ("C2" 0 1 2) (1 "C2"))
+("inverted-c-element" ("NC2" 0 1 2) (1 "NC2"))
+("inverted-assym-c-element" ("NC2P" 0 1 2) (1 "NC2P"))
+("set-reset-flip-flop" ("SRFF" 0 1 2 3) (1 "SRFF"))
+("assym-c-element" ("AC2" 0 1 2) (1 "AC2"))
+("c-element2-with-reset" ("C2R" 0 1 2 3) (1 "C2R"))
+
+("connect" ("buff" 0 1) (1 "buff"))
+("suggested-buffer" ("sbuf" 0 1) (1 "sbuf"))
+
+;;; balsa sells
+("c-element3" ("C3" 0 1 2 3) (1 "C3"))
+("adder" ("balsa_fa" 0 1 2 3 4 5 6 7) (1 "balsa_fa"))
+("builtin-unref" ("balsa_unref" 0 1) (1 "balsa_unref"))
+("and-or21" ("ao21" 0 1 2 3) (1 "ao21"))
+("and-or22" ("ao22" 0 1 2 3 4) (1 "ao22"))
+("and-or-invert22" ("aoi22" 0 1 2 3 4) (1 "aoi22"))
+("and-or222" ("ao222" 0 1 2 3 4 5 6) (1 "ao222"))
+("and-or-invert222" ("aoi222" 0 1 2 3 4 5 6) (1 "aoi222"))
+("mux2" ("mux2" 0 1 2 3) (1 "mux2"))
+("nmux2" ("nmux2" 0 1 2 3) (1 "nmux2"))
+("demux2" ("demux2" 0 1 2 3) (1 "demux2"))
+("s-element" ("selem" 0 1 2 3) (1 "selem"))
+("t-element" ("telem" 0 1 2 3) (1 "telem"))
+("t-element-with-reset" ("telemr" 0 1 2 3) (1 "telemr"))
+("inv-with-reset" ("nor2_reset" 0 1) (1 "nor2_reset"))

@@ -1,0 +1,37 @@
+;;;
+;;; `aclass-cells.net' 
+;;; Asynchronous class tech. cell prototypes
+;;;
+;;; 2013  Shin'ya Ueoka
+
+(circuit "IV" (ports ("Z" output 1) ("A" input 1)) (nets) (instances))
+(circuit "IBUF1" (ports ("Z" output 1) ("A" input 1)) (nets) (instances))
+(circuit "OR2" (ports ("Z" output 1) ("A" input 1) ("B" input 1)) (nets) (instances))
+(circuit "OR3" (ports ("Z" output 1) ("A" input 1) ("B" input 1) ("C" input 1)) (nets) (instances))
+(circuit "OR4" (ports ("Z" output 1) ("A" input 1) ("B" input 1) ("C" input 1) ("D" input 1)) (nets) (instances))
+(circuit "AN2" (ports ("Z" output 1) ("A" input 1) ("B" input 1)) (nets) (instances))
+(circuit "AN3" (ports ("Z" output 1) ("A" input 1) ("B" input 1) ("C" input 1)) (nets) (instances))
+(circuit "AN4" (ports ("Z" output 1) ("A" input 1) ("B" input 1) ("C" input 1) ("D" input 1)) (nets) (instances))
+(circuit "NR2" (ports ("Z" output 1) ("A" input 1) ("B" input 1)) (nets) (instances))
+(circuit "NR3" (ports ("Z" output 1) ("A" input 1) ("B" input 1) ("C" input 1)) (nets) (instances))
+(circuit "NR4" (ports ("Z" output 1) ("A" input 1) ("B" input 1) ("C" input 1) ("D" input 1)) (nets) (instances))
+(circuit "ND2" (ports ("Z" output 1) ("A" input 1) ("B" input 1)) (nets) (instances))
+(circuit "ND3" (ports ("Z" output 1) ("A" input 1) ("B" input 1) ("C" input 1)) (nets) (instances))
+(circuit "ND4" (ports ("Z" output 1) ("A" input 1) ("B" input 1) ("C" input 1) ("D" input 1)) (nets) (instances))
+(circuit "EO" (ports ("Z" output 1) ("A" input 1) ("B" input 1)) (nets) (instances))
+(circuit "EO3" (ports ("Z" output 1) ("A" input 1) ("B" input 1) ("C" input 1)) (nets) (instances))
+(circuit "EN" (ports ("Z" output 1) ("A" input 1) ("B" input 1)) (nets) (instances))
+(circuit "EN3" (ports ("Z" output 1) ("A" input 1) ("B" input 1) ("C" input 1)) (nets) (instances))
+(circuit "LD1" (ports ("D" input 1) ("G" input 1) ("Q" output 1)) (nets) (instances))
+
+(circuit "C2" (ports ("Z" output 1) ("A" input 1) ("B" input 1)) (nets) (instances))
+(circuit "C2R" (ports ("Z" output 1) ("A" input 1) ("B" input 1) ("reset" input 1)) (nets) (instances))
+(circuit "NC2P" (ports ("Z" output 1) ("A" input 1) ("B" input 1)) (nets) (instances))
+(circuit "ACU0D1" (ports ("Z" output 1) ("A" input 1) ("B" input 1)) (nets) (instances))
+(circuit "MUTEX" (ports ("inA" input 1) ("inB" input 1) ("outA" output 1) ("outB" output1)) (nets) (instances))
+(circuit "SRFF" (ports ("S" input 1) ("R" input 1) ("Q" output 1) ("NQ" output 1)) (nets) (instances))
+(circuit "AC2" (ports ("Z" output 1) ("A" input 1) ("B" input 1)) (nets) (instances))
+(circuit "C3" (ports ("Z" output 1) ("A" input 1) ("B" input 1) ("C" input 1)) (nets) (instances))
+
+(circuit "VCC" (ports ("Z" output 1)) (nets) (instances))
+(circuit "GND" (ports ("Z" output 1)) (nets) (instances))
