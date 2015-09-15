@@ -42,4 +42,3 @@ ssh ${host} cat ${TEMP_DIR}/${net_list_file} \
   | perl -pe 's/(\S) +(\S)/$1 $2/g' \
   | perl -pe 's/tri/wire/g' \
   > ${net_list_file}
-ssh $host rm -rf $TEMP_DIR

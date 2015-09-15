@@ -35,5 +35,3 @@ cd $TEMP_DIR
 vcs -full64 -sverilog `basename ${bench_file}` ${options}
 ./simv
 EOS
-
-ssh $host rm -rf $TEMP_DIR
